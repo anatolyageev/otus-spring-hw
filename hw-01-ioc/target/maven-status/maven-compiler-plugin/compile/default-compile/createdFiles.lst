@@ -1,0 +1,9 @@
+org\example\ageev\repository\QuestionRepositoryImpl.class
+org\example\ageev\service\QuestionService.class
+org\example\ageev\domain\Question.class
+org\example\ageev\domain\Answer.class
+org\example\ageev\repository\QuestionRepository.class
+org\example\ageev\utils\DataVisualisation.class
+org\example\ageev\service\QuestionServiceImpl.class
+org\example\ageev\utils\CsvDataLoader.class
+org\example\ageev\App.class

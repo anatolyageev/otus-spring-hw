@@ -4,11 +4,9 @@ import lombok.SneakyThrows;
 import org.example.ageev.domain.Answer;
 import org.example.ageev.domain.Question;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.net.URI;
-import java.nio.file.Paths;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -32,11 +30,7 @@ public class CsvDataLoader {
 
     @SneakyThrows
     public List<Question> getQuestionsFromCsv() {
-        // loads CSV file from the resource folder.
-        URI resource = CsvDataLoader.class.getResource("/" + fileName).toURI();
-        File file = Paths.get(resource).toFile();
-        List<String[]> result = readFile(file, 1);
-
+        List<String[]> result = readFileAsStream(fileName, 1);
         return getQuestionList(result);
     }
 
@@ -57,18 +51,17 @@ public class CsvDataLoader {
         return questions;
     }
 
-    public List<String[]> readFile(File csvFile) {
-        return readFile(csvFile, 0);
-    }
-
-    public List<String[]> readFile(File csvFile, int skipLine) {
+    public List<String[]> readFileAsStream(String csvFileName, int skipLine) throws Exception {
 
         List<String[]> result = new ArrayList<>();
         int indexLine = 1;
 
-        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+        try (BufferedInputStream bufferedReader = new BufferedInputStream(CsvDataLoader.class.getResourceAsStream("/" + csvFileName));
+             InputStreamReader resourceReader = new InputStreamReader(bufferedReader);
+             BufferedReader br = new BufferedReader(resourceReader)) {
 
             String line;
+
             while ((line = br.readLine()) != null) {
 
                 if (indexLine++ <= skipLine) {
@@ -92,8 +85,6 @@ public class CsvDataLoader {
 
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
 
         return result;
