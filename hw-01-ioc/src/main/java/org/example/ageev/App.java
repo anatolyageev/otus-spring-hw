@@ -1,6 +1,6 @@
 package org.example.ageev;
 
-import org.example.ageev.utils.DataVisualisation;
+import org.example.ageev.view.DataVisualisation;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class App {

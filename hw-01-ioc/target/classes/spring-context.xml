@@ -12,7 +12,7 @@
     <bean id="questionService" class="org.example.ageev.service.QuestionServiceImpl">
         <constructor-arg ref="questionRepository"/>
     </bean>
-    <bean id="dataVisualisation" class="org.example.ageev.utils.DataVisualisation">
+    <bean id="dataVisualisation" class="org.example.ageev.view.DataVisualisation">
         <constructor-arg ref="questionService"/>
     </bean>
 </beans>

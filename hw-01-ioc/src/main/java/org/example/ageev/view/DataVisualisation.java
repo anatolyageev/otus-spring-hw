@@ -1,4 +1,4 @@
-package org.example.ageev.utils;
+package org.example.ageev.view;
 
 import lombok.extern.slf4j.Slf4j;
 import org.example.ageev.domain.Answer;
