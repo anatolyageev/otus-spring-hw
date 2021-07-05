@@ -21,7 +21,6 @@ public class QuizServiceImpl implements QuizService {
         this.viewQuiz = viewQuiz;
     }
 
-
     @Override
     public void runQuiz() {
         initQuiz();
