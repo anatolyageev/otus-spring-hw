@@ -1,6 +1,5 @@
 package ru.otus.ageev.hw05springjdbc.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
