@@ -12,13 +12,15 @@ import java.util.Scanner;
 public class QuizServiceImpl implements QuizService {
     private final QuestionService questionService;
     private final ViewQuiz viewQuiz;
+    private final RequestUserCredentials requestUserCredentials;
     private int numberCorrectAnswers;
     private int totalNumberQuestions;
     private String studentName;
 
-    public QuizServiceImpl(QuestionService questionService, ViewQuiz viewQuiz) {
+    public QuizServiceImpl(QuestionService questionService, ViewQuiz viewQuiz, RequestUserCredentials requestUserCredentials) {
         this.questionService = questionService;
         this.viewQuiz = viewQuiz;
+        this.requestUserCredentials = requestUserCredentials;
     }
 
     @Override
@@ -30,10 +32,8 @@ public class QuizServiceImpl implements QuizService {
 
     private void initQuiz() {
         viewQuiz.visualize("greeting");
-        viewQuiz.visualize("request.name");
-        Scanner scanner = new Scanner(System.in);
-        studentName = scanner.nextLine();
-
+        requestUserCredentials.requestUserName();
+        studentName = requestUserCredentials.receiveUserName();
     }
 
     private void mainPart() {
