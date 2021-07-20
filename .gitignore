@@ -19,13 +19,15 @@
 *.zip
 *.tar.gz
 *.rar
-
+HELP.md
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
 # Ignore Gradle project-specific cache directory
 .gradle
 /buildSrc/.gradle/
+
+.mvn
 
 # Ignore Gradle build output directory
 build
