@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
@@ -12,6 +11,7 @@ import ru.otus.ageev.hw05springjdbc.dao.AuthorBookDao;
 import ru.otus.ageev.hw05springjdbc.dao.AuthorDao;
 import ru.otus.ageev.hw05springjdbc.dao.BookDao;
 import ru.otus.ageev.hw05springjdbc.dao.GenreDao;
+import ru.otus.ageev.hw05springjdbc.dao.extractor.BookResultSetExtractor;
 import ru.otus.ageev.hw05springjdbc.domain.Author;
 import ru.otus.ageev.hw05springjdbc.domain.AuthorBook;
 import ru.otus.ageev.hw05springjdbc.domain.Book;
@@ -19,10 +19,7 @@ import ru.otus.ageev.hw05springjdbc.domain.Genre;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 public class BookDaoJdbc implements BookDao {
@@ -41,7 +38,14 @@ public class BookDaoJdbc implements BookDao {
 
     @Override
     public List<Book> getAll() {
-        return jdbcOperations.query("select * from books", new BookMapper());
+        Map<Long, Book> books = jdbcOperations.query(
+                "select b.id, title, page_count, genre_id, genre_name, ab.AUTHOR_ID, name, surname from books b " +
+                        "left join authors_books ab on b.id = ab.book_id " +
+                        "left join authors a on a.id = ab.author_id," +
+                        "genres g " +
+                        "where genre_id = g.id"
+                , new BookResultSetExtractor());
+        return new ArrayList<>(Objects.requireNonNull(books).values());
     }
 
     @Override

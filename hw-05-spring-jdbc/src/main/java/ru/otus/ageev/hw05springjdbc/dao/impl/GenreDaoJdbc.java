@@ -23,7 +23,7 @@ public class GenreDaoJdbc implements GenreDao {
     public Genre getById(long id) {
         Map<String, Object> params = Collections.singletonMap("id", id);
         return jdbcOperations.queryForObject(
-                "select * from genres where id = :id", params, new GenreMapper());
+                "select id, genre_name from genres where id = :id", params, new GenreMapper());
     }
 
     private static class GenreMapper implements RowMapper<Genre> {

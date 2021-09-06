@@ -28,15 +28,14 @@ public class BookServiceImpl implements BookService {
         this.authorBookService = authorBookService;
     }
 
-
     @Override
     public List<Book> getAll() {
-        return null;
+        return bookDao.getAll();
     }
 
     @Override
     public Book getById(long id) {
-        return null;
+        return bookDao.getById(id);
     }
 
     @Override
@@ -47,17 +46,16 @@ public class BookServiceImpl implements BookService {
         } else {
             bookDao.update(book);
         }
-        authorService.saveAll(bookDto.getAuthorList());
+        bookDto.setAuthorList(authorService.saveAll(bookDto.getAuthorList()));
 
         List<AuthorBook> authorBooks = bookDto.getAuthorList().stream()
                 .map(author -> new AuthorBook(author.getId(), bookDto.getId()))
                 .collect(Collectors.toList());
-
         authorBookService.saveAll(authorBooks);
     }
 
     @Override
     public void deleteById(long id) {
-
+        bookDao.deleteById(id);
     }
 }

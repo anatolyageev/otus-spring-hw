@@ -20,7 +20,7 @@ public class AuthorBookServiceImpl implements AuthorBookService {
 
     @Override
     public void save(AuthorBook authorBook) {
-        if(authorBookDao.isExist(authorBook)){
+        if(!authorBookDao.isExist(authorBook)){
             authorBookDao.insert(authorBook);
         }
     }
