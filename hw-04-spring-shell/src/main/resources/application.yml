@@ -1,0 +1,9 @@
+spring:
+    messages:
+        basename: quiz_interface
+        encoding: utf-8
+        fallback-to-system-locale: false
+quiz:
+    file: quiz/quiz
+    locale: en
+
