@@ -12,7 +12,6 @@ import java.util.List;
 public class QuestionRepositoryImpl implements QuestionRepository {
 
     private final DataLoader dataLoader;
-    private List<Question> questionList;
 
     @Autowired
     public QuestionRepositoryImpl(DataLoader dataLoader) {
@@ -21,7 +20,6 @@ public class QuestionRepositoryImpl implements QuestionRepository {
 
     @Override
     public List<Question> getAll() {
-        questionList = dataLoader.getQuestionsFromCsv();
-        return Collections.unmodifiableList(questionList);
+        return Collections.unmodifiableList(dataLoader.getQuestionsFromCsv());
     }
 }
