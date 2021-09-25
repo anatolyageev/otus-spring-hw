@@ -23,6 +23,7 @@ public class Hw05SpringJdbcApplication {
     public static void main(String[] args) throws SQLException {
 //        SpringApplication.run(Hw05SpringJdbcApplication.class, args);
         ApplicationContext context = SpringApplication.run(Hw05SpringJdbcApplication.class, args);
+        Console.main(args);
         BookDao dao =  context.getBean(BookDao.class);
         AuthorBookDao authorBookDao = context.getBean(AuthorBookDao.class);
         AuthorDao authorDao = context.getBean(AuthorDao.class);

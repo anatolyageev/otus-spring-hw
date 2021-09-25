@@ -1,6 +1,7 @@
 package ru.otus.ageev.hw05springjdbc.view;
 
 import lombok.RequiredArgsConstructor;
+import org.h2.tools.Console;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
@@ -8,11 +9,11 @@ import ru.otus.ageev.hw05springjdbc.domain.Author;
 import ru.otus.ageev.hw05springjdbc.domain.Book;
 import ru.otus.ageev.hw05springjdbc.domain.Genre;
 import ru.otus.ageev.hw05springjdbc.dto.BookDto;
-import ru.otus.ageev.hw05springjdbc.service.AuthorService;
 import ru.otus.ageev.hw05springjdbc.service.BookService;
 import ru.otus.ageev.hw05springjdbc.service.GenreService;
 import ru.otus.ageev.hw05springjdbc.service.InterfaceHelperService;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @ShellComponent
@@ -22,6 +23,12 @@ public class ApplicationEventsCommands {
     private final BookService bookService;
     private final GenreService genreService;
     private final InterfaceHelperService interfaceHelperService;
+
+    @ShellMethod(value = "Run H2 Console", key = {"h2", "runH2Console"})
+    public void runH2Console() throws SQLException {
+        String[] EMPTY_ARRAY = new String[0];
+        Console.main(EMPTY_ARRAY);
+    }
 
     @ShellMethod(value = "All books", key = {"ga", "getAll"})
     public void getAll() {
