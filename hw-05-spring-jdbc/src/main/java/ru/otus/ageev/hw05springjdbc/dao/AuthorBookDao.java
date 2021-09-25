@@ -1,19 +1,18 @@
 package ru.otus.ageev.hw05springjdbc.dao;
 
-import ru.otus.ageev.hw05springjdbc.domain.AuthorBook;
-import ru.otus.ageev.hw05springjdbc.domain.Book;
+import ru.otus.ageev.hw05springjdbc.domain.AuthorBookRelation;
 
 import java.util.List;
 
 public interface AuthorBookDao {
 
-    List<AuthorBook> getByBookId(long id);
+    List<AuthorBookRelation> getByBookId(long id);
 
-    List<AuthorBook> getByAuthorId(long id);
+    List<AuthorBookRelation> getByAuthorId(long id);
 
-    boolean isExist(AuthorBook authorBook);
+    boolean isExist(AuthorBookRelation authorBook);
 
-    void insert(AuthorBook authorBook);
+    void insert(AuthorBookRelation authorBook);
 
-    void deleteById(AuthorBook authorBook);
+    void deleteById(AuthorBookRelation authorBook);
 }

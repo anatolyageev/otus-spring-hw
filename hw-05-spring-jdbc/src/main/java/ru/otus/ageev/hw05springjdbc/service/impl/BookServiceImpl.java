@@ -3,14 +3,13 @@ package ru.otus.ageev.hw05springjdbc.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.otus.ageev.hw05springjdbc.dao.BookDao;
-import ru.otus.ageev.hw05springjdbc.domain.AuthorBook;
+import ru.otus.ageev.hw05springjdbc.domain.AuthorBookRelation;
 import ru.otus.ageev.hw05springjdbc.domain.Book;
 import ru.otus.ageev.hw05springjdbc.dto.BookDto;
 import ru.otus.ageev.hw05springjdbc.service.AuthorBookService;
 import ru.otus.ageev.hw05springjdbc.service.AuthorService;
 import ru.otus.ageev.hw05springjdbc.service.BookService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -48,8 +47,8 @@ public class BookServiceImpl implements BookService {
         }
         bookDto.setAuthorList(authorService.saveAll(bookDto.getAuthorList()));
 
-        List<AuthorBook> authorBooks = bookDto.getAuthorList().stream()
-                .map(author -> new AuthorBook(author.getId(), bookDto.getId()))
+        List<AuthorBookRelation> authorBooks = bookDto.getAuthorList().stream()
+                .map(author -> new AuthorBookRelation(author.getId(), bookDto.getId()))
                 .collect(Collectors.toList());
         authorBookService.saveAll(authorBooks);
     }

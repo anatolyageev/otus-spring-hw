@@ -6,9 +6,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import ru.otus.ageev.hw05springjdbc.dao.AuthorBookDao;
 import ru.otus.ageev.hw05springjdbc.dao.AuthorDao;
-import ru.otus.ageev.hw05springjdbc.dao.BookDao;
 import ru.otus.ageev.hw05springjdbc.domain.Author;
 
 import java.sql.ResultSet;
@@ -21,11 +19,9 @@ import java.util.Map;
 public class AuthorDaoJdbc implements AuthorDao {
     private final NamedParameterJdbcOperations jdbcOperations;
 
-
     public AuthorDaoJdbc(NamedParameterJdbcOperations jdbcOperations) {
         this.jdbcOperations = jdbcOperations;
     }
-
 
     @Override
     public List<Author> getAll() {
@@ -59,11 +55,6 @@ public class AuthorDaoJdbc implements AuthorDao {
                         "name", author.getName(),
                         "surname", author.getSurname())
         );
-    }
-
-    @Override
-    public void deleteById(long id) {
-
     }
 
     private class AuthorMapper implements RowMapper<Author> {

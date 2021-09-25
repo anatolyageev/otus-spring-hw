@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Data
 @RequiredArgsConstructor
-public class AuthorBook {
+public class AuthorBookRelation {
     private final Long authorId;
     private final Long bookId;
 }

@@ -9,6 +9,7 @@ import ru.otus.ageev.hw05springjdbc.domain.Genre;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -24,6 +25,18 @@ public class GenreDaoJdbc implements GenreDao {
         Map<String, Object> params = Collections.singletonMap("id", id);
         return jdbcOperations.queryForObject(
                 "select id, genre_name from genres where id = :id", params, new GenreMapper());
+    }
+
+    @Override
+    public Genre getByName(String genreName) {
+        Map<String, Object> params = Collections.singletonMap("genre_name", genreName);
+        return jdbcOperations.queryForObject(
+                "select id, genre_name from genres where genre_name = :genre_name", params, new GenreMapper());
+    }
+
+    @Override
+    public List<Genre> getAll() {
+        return jdbcOperations.query("select id, genre_name from genres", new GenreMapper());
     }
 
     private static class GenreMapper implements RowMapper<Genre> {

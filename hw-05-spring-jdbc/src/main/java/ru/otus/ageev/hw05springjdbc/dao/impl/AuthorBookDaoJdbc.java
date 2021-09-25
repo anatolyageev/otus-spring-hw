@@ -4,7 +4,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Repository;
 import ru.otus.ageev.hw05springjdbc.dao.AuthorBookDao;
-import ru.otus.ageev.hw05springjdbc.domain.AuthorBook;
+import ru.otus.ageev.hw05springjdbc.domain.AuthorBookRelation;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,19 +21,19 @@ public class AuthorBookDaoJdbc implements AuthorBookDao {
     }
 
     @Override
-    public List<AuthorBook> getByBookId(long id) {
+    public List<AuthorBookRelation> getByBookId(long id) {
         Map<String, Object> params = Collections.singletonMap("bookId", id);
         return jdbcOperations.query("SELECT AUTHOR_ID, BOOK_ID FROM AUTHORS_BOOKS WHERE BOOK_ID = :bookId", params, new AuthorBookMapper());
     }
 
     @Override
-    public List<AuthorBook> getByAuthorId(long id) {
+    public List<AuthorBookRelation> getByAuthorId(long id) {
         Map<String, Object> params = Collections.singletonMap("authorId", id);
         return jdbcOperations.query("SELECT AUTHOR_ID, BOOK_ID FROM AUTHORS_BOOKS WHERE AUTHOR_ID = :authorId", params, new AuthorBookMapper());
     }
 
     @Override
-    public boolean isExist(AuthorBook authorBook) {
+    public boolean isExist(AuthorBookRelation authorBook) {
         return  jdbcOperations.queryForObject(
                 "SELECT count(*) FROM AUTHORS_BOOKS WHERE BOOK_ID = :book_id and author_id =:author_id",
                 Map.of("author_id", authorBook.getAuthorId(),
@@ -41,7 +41,7 @@ public class AuthorBookDaoJdbc implements AuthorBookDao {
     }
 
     @Override
-    public void insert(AuthorBook authorBook) {
+    public void insert(AuthorBookRelation authorBook) {
         jdbcOperations.update(
                 "insert into authors_books (author_id, book_id) values (:author_id, :book_id)",
                 Map.of("author_id", authorBook.getAuthorId(),
@@ -50,17 +50,17 @@ public class AuthorBookDaoJdbc implements AuthorBookDao {
     }
 
     @Override
-    public void deleteById(AuthorBook authorBook) {
+    public void deleteById(AuthorBookRelation authorBook) {
 
     }
 
-    private static class AuthorBookMapper implements RowMapper<AuthorBook> {
+    private static class AuthorBookMapper implements RowMapper<AuthorBookRelation> {
 
         @Override
-        public AuthorBook mapRow(ResultSet resultSet, int i) throws SQLException {
+        public AuthorBookRelation mapRow(ResultSet resultSet, int i) throws SQLException {
             long authorId = resultSet.getLong("author_id");
             long bookId = resultSet.getLong("book_id");
-            return new AuthorBook(authorId, bookId);
+            return new AuthorBookRelation(authorId, bookId);
         }
     }
 }

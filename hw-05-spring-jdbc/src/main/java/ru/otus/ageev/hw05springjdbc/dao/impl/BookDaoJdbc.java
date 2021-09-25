@@ -13,7 +13,7 @@ import ru.otus.ageev.hw05springjdbc.dao.BookDao;
 import ru.otus.ageev.hw05springjdbc.dao.GenreDao;
 import ru.otus.ageev.hw05springjdbc.dao.extractor.BookResultSetExtractor;
 import ru.otus.ageev.hw05springjdbc.domain.Author;
-import ru.otus.ageev.hw05springjdbc.domain.AuthorBook;
+import ru.otus.ageev.hw05springjdbc.domain.AuthorBookRelation;
 import ru.otus.ageev.hw05springjdbc.domain.Book;
 import ru.otus.ageev.hw05springjdbc.domain.Genre;
 
@@ -93,9 +93,9 @@ public class BookDaoJdbc implements BookDao {
             long id = resultSet.getLong("id");
             String title = resultSet.getString("title");
             Integer pageCount = resultSet.getInt("page_count");
-            List<AuthorBook> authorBooks = authorBookDao.getByBookId(id);
+            List<AuthorBookRelation> authorBooks = authorBookDao.getByBookId(id);
             List<Author> authorList = new ArrayList<>();
-            for (AuthorBook authorBook : authorBooks) {
+            for (AuthorBookRelation authorBook : authorBooks) {
                 authorList.add(authorDao.getById(authorBook.getAuthorId()));
             }
             Genre genre = genreDao.getById(resultSet.getInt("genre_id"));

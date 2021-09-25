@@ -1,6 +1,7 @@
 package ru.otus.ageev.hw05springjdbc.dto;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import ru.otus.ageev.hw05springjdbc.domain.Author;
@@ -12,6 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 public class BookDto {
     private Long id;
     private String title;
@@ -25,5 +27,9 @@ public class BookDto {
         this.pageCount= book.getPageCount();
         this.authorList= book.getAuthorList();
         this.genre= book.getGenre();
+    }
+
+    public Book getItem(){
+        return new Book(id, title, pageCount, authorList, genre);
     }
 }

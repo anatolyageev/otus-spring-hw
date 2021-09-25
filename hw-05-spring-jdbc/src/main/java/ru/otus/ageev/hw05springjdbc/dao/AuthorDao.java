@@ -13,6 +13,4 @@ public interface AuthorDao {
     long insert(Author author);
 
     void update(Author author);
-
-    void deleteById(long id);
 }
