@@ -3,7 +3,7 @@ package ru.otus.ageev.hw06jpa.repositories.impl;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Repository;
-import ru.otus.ageev.hw06jpa.repositories.GenreDao;
+import ru.otus.ageev.hw06jpa.repositories.GenreRepository;
 import ru.otus.ageev.hw06jpa.domain.Genre;
 
 import java.sql.ResultSet;
@@ -13,10 +13,10 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class GenreDaoJdbc implements GenreDao {
+public class GenreRepositoryJpa implements GenreRepository {
     private final NamedParameterJdbcOperations jdbcOperations;
 
-    public GenreDaoJdbc(NamedParameterJdbcOperations jdbcOperations) {
+    public GenreRepositoryJpa(NamedParameterJdbcOperations jdbcOperations) {
         this.jdbcOperations = jdbcOperations;
     }
 

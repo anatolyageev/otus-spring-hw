@@ -2,59 +2,44 @@ package ru.otus.ageev.hw06jpa.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.otus.ageev.hw06jpa.repositories.BookDao;
-import ru.otus.ageev.hw06jpa.domain.AuthorBookRelation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import ru.otus.ageev.hw06jpa.domain.Book;
-import ru.otus.ageev.hw06jpa.dto.BookDto;
-import ru.otus.ageev.hw06jpa.service.AuthorBookService;
+import ru.otus.ageev.hw06jpa.repositories.BookRepository;
 import ru.otus.ageev.hw06jpa.service.AuthorService;
 import ru.otus.ageev.hw06jpa.service.BookService;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
+
 public class BookServiceImpl implements BookService {
-    private final BookDao bookDao;
-    private final AuthorService authorService;
-    private final AuthorBookService authorBookService;
+    private final BookRepository bookRepository;
 
     @Autowired
-    public BookServiceImpl(BookDao bookDao, AuthorService authorService, AuthorBookService authorBookService) {
-        this.bookDao = bookDao;
-        this.authorService = authorService;
-        this.authorBookService = authorBookService;
-    }
+    public BookServiceImpl(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+     }
 
     @Override
+    @Transactional
     public List<Book> getAll() {
-        return bookDao.getAll();
+        return bookRepository.getAll();
     }
 
     @Override
-    public Book getById(long id) {
-        return bookDao.getById(id);
+    public Optional<Book> getById(long id) {
+        return bookRepository.getById(id);
     }
 
     @Override
     public void save(Book book) {
-        BookDto bookDto = new BookDto(book);
-        if (Objects.isNull(book.getId())) {
-            bookDto.setId(bookDao.insert(book));
-        } else {
-            bookDao.update(book);
-        }
-        bookDto.setAuthorList(authorService.saveAll(bookDto.getAuthorList()));
 
-        List<AuthorBookRelation> authorBooks = bookDto.getAuthorList().stream()
-                .map(author -> new AuthorBookRelation(author.getId(), bookDto.getId()))
-                .collect(Collectors.toList());
-        authorBookService.saveAll(authorBooks);
     }
 
     @Override
     public void deleteById(long id) {
-        bookDao.deleteById(id);
+        bookRepository.deleteById(id);
     }
 }

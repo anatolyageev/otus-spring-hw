@@ -33,9 +33,11 @@ public class ApplicationEventsCommands {
     @ShellMethod(value = "All books", key = {"ga", "getAll"})
     public void getAll() {
         List<Book> books = bookService.getAll();
-        for (Book book : books) {
-            System.out.println(book);
-        }
+//        System.out.println(books);
+        books.forEach(System.out::println);
+//        for (Book book : books) {
+//            System.out.println(book);
+//        }
     }
 
     @ShellMethod(value = "get book", key = {"gb", "getBook"})
@@ -66,7 +68,7 @@ public class ApplicationEventsCommands {
                              @ShellOption Integer pageCount,
                              @ShellOption String genreName) {
 
-        BookDto bookDto = new BookDto(bookService.getById(id));
+        BookDto bookDto = new BookDto(bookService.getById(id).get());
         Genre genre = genreService.getByName(genreName);
         bookDto.setGenre(genre);
         bookDto.setTitle(title);

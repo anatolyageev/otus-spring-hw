@@ -1,13 +1,10 @@
 package ru.otus.ageev.hw06jpa.repositories.impl;
 
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import ru.otus.ageev.hw06jpa.repositories.AuthorDao;
 import ru.otus.ageev.hw06jpa.domain.Author;
+import ru.otus.ageev.hw06jpa.repositories.AuthorRepository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,10 +13,10 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class AuthorDaoJdbc implements AuthorDao {
+public class AuthorRepositoryJpa implements AuthorRepository {
     private final NamedParameterJdbcOperations jdbcOperations;
 
-    public AuthorDaoJdbc(NamedParameterJdbcOperations jdbcOperations) {
+    public AuthorRepositoryJpa(NamedParameterJdbcOperations jdbcOperations) {
         this.jdbcOperations = jdbcOperations;
     }
 
@@ -37,24 +34,12 @@ public class AuthorDaoJdbc implements AuthorDao {
 
     @Override
     public long insert(Author author) {
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-        MapSqlParameterSource sqlParameterSource = new MapSqlParameterSource();
-        sqlParameterSource.addValue("name", author.getName());
-        sqlParameterSource.addValue("surname", author.getSurname());
-        jdbcOperations.update(
-                "insert into authors (name, surname) values (:name, :surname)",
-                sqlParameterSource, keyHolder);
-        return keyHolder.getKey().longValue();
+           return 0L;
     }
 
     @Override
     public void update(Author author) {
-        jdbcOperations.update(
-                "update authors set name=:name, surname=:surname where id = :id",
-                Map.of("id", author.getId(),
-                        "name", author.getName(),
-                        "surname", author.getSurname())
-        );
+
     }
 
     private class AuthorMapper implements RowMapper<Author> {

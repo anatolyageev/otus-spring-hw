@@ -4,7 +4,7 @@ import ru.otus.ageev.hw06jpa.domain.Author;
 
 import java.util.List;
 
-public interface AuthorDao {
+public interface AuthorRepository {
     List<Author> getAll();
 
     Author getById(long id);

@@ -1,3 +1,4 @@
+drop table if exists authors_books;
 drop table if exists authors;
 drop table if exists books;
 drop table if exists genres;
@@ -19,8 +20,8 @@ create table books
 (
     id         bigint auto_increment primary key,
     title      varchar(255),
-    page_count INTEGER,
-    genre_id   bigint,
+    page_count integer,
+    genre_id   integer,
     foreign key (genre_id) references genres (id)
 );
 

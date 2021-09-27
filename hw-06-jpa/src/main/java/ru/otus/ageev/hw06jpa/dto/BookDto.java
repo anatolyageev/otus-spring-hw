@@ -25,7 +25,6 @@ public class BookDto {
         this.id = book.getId();
         this.title = book.getTitle();
         this.pageCount= book.getPageCount();
-        this.authorList= book.getAuthorList();
         this.genre= book.getGenre();
     }
 

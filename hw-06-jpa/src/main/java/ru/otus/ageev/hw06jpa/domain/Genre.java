@@ -1,11 +1,17 @@
 package ru.otus.ageev.hw06jpa.domain;
 
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
-@Data
-@RequiredArgsConstructor
+import javax.persistence.*;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "genres")
+@ToString
 public class Genre {
-    private final Long id;
-    private final String genreName;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private  Long id;
+    private  String genreName;
 }

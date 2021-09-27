@@ -2,7 +2,7 @@ package ru.otus.ageev.hw06jpa.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.otus.ageev.hw06jpa.repositories.AuthorDao;
+import ru.otus.ageev.hw06jpa.repositories.AuthorRepository;
 import ru.otus.ageev.hw06jpa.domain.Author;
 import ru.otus.ageev.hw06jpa.dto.AuthorDto;
 import ru.otus.ageev.hw06jpa.service.AuthorService;
@@ -13,25 +13,25 @@ import java.util.Objects;
 
 @Service
 public class AuthorServiceImpl implements AuthorService {
-    private final AuthorDao authorDao;
+    private final AuthorRepository authorRepository;
 
     @Autowired
-    public AuthorServiceImpl(AuthorDao authorDao) {
-        this.authorDao = authorDao;
+    public AuthorServiceImpl(AuthorRepository authorRepository) {
+        this.authorRepository = authorRepository;
     }
 
     @Override
     public Author getById(long id) {
-        return authorDao.getById(id);
+        return authorRepository.getById(id);
     }
 
     @Override
     public Author save(Author author) {
         AuthorDto authorDto = new AuthorDto(author);
         if (Objects.isNull(authorDto.getId())) {
-            authorDto.setId(authorDao.insert(author));
+            authorDto.setId(authorRepository.insert(author));
         } else {
-            authorDao.update(authorDto.getItem());
+            authorRepository.update(authorDto.getItem());
         }
         return authorDto.getItem();
     }

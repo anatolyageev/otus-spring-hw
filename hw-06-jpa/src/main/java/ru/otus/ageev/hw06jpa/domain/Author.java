@@ -1,12 +1,18 @@
 package ru.otus.ageev.hw06jpa.domain;
 
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
-@Data
-@RequiredArgsConstructor
+import javax.persistence.*;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "authors")
+@ToString
 public class Author {
-    private final Long id;
-    private final String name;
-    private final String surname;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private  Long id;
+    private  String name;
+    private  String surname;
 }

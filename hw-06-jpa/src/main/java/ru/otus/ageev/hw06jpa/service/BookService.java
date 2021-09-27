@@ -3,11 +3,12 @@ package ru.otus.ageev.hw06jpa.service;
 import ru.otus.ageev.hw06jpa.domain.Book;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BookService {
     List<Book> getAll();
 
-    Book getById(long id);
+    Optional<Book> getById(long id);
 
     void save(Book book);
 
