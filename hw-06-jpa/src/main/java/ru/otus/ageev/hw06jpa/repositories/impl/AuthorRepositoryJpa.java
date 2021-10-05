@@ -1,55 +1,56 @@
 package ru.otus.ageev.hw06jpa.repositories.impl;
 
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Repository;
 import ru.otus.ageev.hw06jpa.domain.Author;
 import ru.otus.ageev.hw06jpa.repositories.AuthorRepository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Collections;
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
 @Repository
 public class AuthorRepositoryJpa implements AuthorRepository {
-    private final NamedParameterJdbcOperations jdbcOperations;
+    @PersistenceContext
+    private final EntityManager em;
 
-    public AuthorRepositoryJpa(NamedParameterJdbcOperations jdbcOperations) {
-        this.jdbcOperations = jdbcOperations;
+    public AuthorRepositoryJpa(EntityManager em) {
+        this.em = em;
     }
 
     @Override
     public List<Author> getAll() {
-        return null;
+        TypedQuery<Author> query = em.createQuery("select a from Author a", Author.class);
+        return query.getResultList();
     }
 
     @Override
-    public Author getById(long id) {
-        Map<String, Object> params = Collections.singletonMap("id", id);
-        return jdbcOperations.queryForObject(
-                "select * from authors where id = :id", params, new AuthorMapper());
-    }
-
-    @Override
-    public long insert(Author author) {
-           return 0L;
-    }
-
-    @Override
-    public void update(Author author) {
-
-    }
-
-    private class AuthorMapper implements RowMapper<Author> {
-
-        @Override
-        public Author mapRow(ResultSet resultSet, int i) throws SQLException {
-            long id = resultSet.getLong("id");
-            String name = resultSet.getString("name");
-            String surname = resultSet.getString("surname");
-            return new Author(id, name, surname);
+    public Optional<Author> getById(long id) {
+        TypedQuery<Author> query = em.createQuery(
+                "select a from Author a where a.id = :id"
+                , Author.class);
+        query.setParameter("id", id);
+        try {
+            return Optional.of(query.getSingleResult());
+        } catch (NoResultException e) {
+            return Optional.empty();
         }
+    }
+
+    @Override
+    public Author save(Author author) {
+        if (author.getId() == null) {
+            em.persist(author);
+        } else {
+            return em.merge(author);
+        }
+        return author;
+    }
+
+    @Override
+    public void delete(Author author) {
+        em.remove(author);
     }
 }

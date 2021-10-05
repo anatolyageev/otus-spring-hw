@@ -6,7 +6,6 @@ import lombok.Setter;
 import lombok.ToString;
 import ru.otus.ageev.hw06jpa.domain.Author;
 import ru.otus.ageev.hw06jpa.domain.Book;
-import ru.otus.ageev.hw06jpa.domain.Comment;
 import ru.otus.ageev.hw06jpa.domain.Genre;
 
 import java.util.List;
@@ -21,7 +20,6 @@ public class BookDto {
     private Integer pageCount;
     private List<Author> authorList;
     private Genre genre;
-    private List<Comment>  comments;
 
     public BookDto(Book book) {
         this.id = book.getId();
@@ -31,6 +29,6 @@ public class BookDto {
     }
 
     public Book getItem(){
-        return new Book(id, title, pageCount, authorList, genre, comments);
+        return new Book(id, title, pageCount, authorList, genre);
     }
 }

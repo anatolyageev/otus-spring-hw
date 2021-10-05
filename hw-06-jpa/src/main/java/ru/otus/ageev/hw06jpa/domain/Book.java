@@ -12,24 +12,23 @@ import java.util.List;
 @AllArgsConstructor
 @ToString
 @Entity
+@Getter
 @Table(name = "books")
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "title")
     private String title;
+    @Column(name = "page_count")
     private Integer pageCount;
 
     @Fetch(FetchMode.SUBSELECT)
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "authors_books",joinColumns = @JoinColumn(name = "book_id"),
+    @ManyToMany(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
+    @JoinTable(name = "authors_books", joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id"))
     private List<Author> authors;
     @ManyToOne
     @JoinColumn(name = "genre_id", referencedColumnName = "id")
     private Genre genre;
-
-    @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "book_id")
-    private List<Comment> comments;
 }

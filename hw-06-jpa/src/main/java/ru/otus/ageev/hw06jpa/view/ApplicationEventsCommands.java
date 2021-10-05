@@ -10,6 +10,7 @@ import ru.otus.ageev.hw06jpa.domain.Book;
 import ru.otus.ageev.hw06jpa.domain.Genre;
 import ru.otus.ageev.hw06jpa.dto.BookDto;
 import ru.otus.ageev.hw06jpa.service.BookService;
+import ru.otus.ageev.hw06jpa.service.CommentService;
 import ru.otus.ageev.hw06jpa.service.GenreService;
 import ru.otus.ageev.hw06jpa.service.InterfaceHelperService;
 
@@ -22,6 +23,7 @@ public class ApplicationEventsCommands {
 
     private final BookService bookService;
     private final GenreService genreService;
+    private final CommentService commentService;
     private final InterfaceHelperService interfaceHelperService;
 
     @ShellMethod(value = "Run H2 Console", key = {"h2", "runH2Console"})
@@ -33,16 +35,13 @@ public class ApplicationEventsCommands {
     @ShellMethod(value = "All books", key = {"ga", "getAll"})
     public void getAll() {
         List<Book> books = bookService.getAll();
-//        System.out.println(books);
         books.forEach(System.out::println);
-//        for (Book book : books) {
-//            System.out.println(book);
-//        }
     }
 
     @ShellMethod(value = "get book", key = {"gb", "getBook"})
     public String getBook(@ShellOption Long id) {
-        return bookService.getById(id).toString();
+        Book book = bookService.getById(id).get();
+        return book.toString();
     }
 
     @ShellMethod(value = "Insert book", key = {"ib", "insertBook"})
@@ -84,4 +83,8 @@ public class ApplicationEventsCommands {
         return "Book successfully deleted";
     }
 
+    @ShellMethod(value = "All comments for book", key = {"gcb", "getCommetsBook"})
+    public void getAllCommentsForBook(@ShellOption Long id) {
+        commentService.getAllByBook(id).forEach(System.out::println);
+    }
 }

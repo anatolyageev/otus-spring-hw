@@ -51,7 +51,7 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public void deleteById(long id) {
-        bookRepository.getById(id).ifPresentOrElse(book -> bookRepository.delete(book), () -> {
+        bookRepository.getById(id).ifPresentOrElse(bookRepository::delete, () -> {
             throw new ResourceNotFoundException("Book with id " + id + " is not found!");
         });
     }

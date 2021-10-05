@@ -1,4 +1,6 @@
+drop table if exists authors_books;
 drop table if exists authors;
+drop table if exists comments;
 drop table if exists books;
 drop table if exists genres;
 
@@ -15,8 +17,6 @@ create table genres
     genre_name varchar(255)
 );
 
-
-
 create table books
 (
     id         bigint auto_increment primary key,
@@ -31,13 +31,14 @@ create table comments
     id      bigint auto_increment primary key,
     comment varchar(2000),
     book_id bigint,
-    foreign key (book_id) references books (id)
+    foreign key (book_id) references books (id) on delete cascade
 );
 
 create table authors_books
 (
     author_id bigint not null,
-    book_id   bigint not null references books (id) on delete cascade,
+    book_id   bigint not null
+        references books (id) on delete cascade,
 
     foreign key (author_id)
         references authors (id),

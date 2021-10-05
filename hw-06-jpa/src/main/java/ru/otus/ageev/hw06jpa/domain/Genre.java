@@ -9,9 +9,11 @@ import javax.persistence.*;
 @Entity
 @Table(name = "genres")
 @ToString
+@Getter
 public class Genre {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long id;
+    @Column(name = "genre_name")
     private  String genreName;
 }

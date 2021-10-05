@@ -1,6 +1,5 @@
 package ru.otus.ageev.hw06jpa.service.impl;
 
-import lombok.val;
 import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,16 +9,13 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 import ru.otus.ageev.hw06jpa.domain.Author;
 import ru.otus.ageev.hw06jpa.domain.Book;
-import ru.otus.ageev.hw06jpa.domain.Comment;
 import ru.otus.ageev.hw06jpa.domain.Genre;
-import ru.otus.ageev.hw06jpa.dto.BookDto;
-import ru.otus.ageev.hw06jpa.repositories.BookRepository;
 import ru.otus.ageev.hw06jpa.repositories.impl.BookRepositoryJpa;
 
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("Jpa repo for Book ")
 @DataJpaTest
@@ -32,13 +28,14 @@ class BookServiceImplTest {
     private TestEntityManager em;
 
     private final long EXPECTED_BOOK_ID = 6;
+    private final long EXPECTED_UPDATED_BOOK_ID = 1;
     private final int EXPECTED_NUMBER_OF_BOOKS = 5;
     private final Book INSERT_BOOK = new Book(null, "Дубровский", 351, Arrays.asList(new Author(1L, "Александр", "Пушкин")),
-            new Genre(1L, "Роман"), Arrays.asList(new Comment(null,"fffff")));
+            new Genre(1L, "Роман"));
     private final Book UPDATE_BOOK = new Book(1L, "Евгений Онегин Updated", 251,
             Arrays.asList(new Author(1L, "Александр", "Пушкин")),
-            new Genre(1L, "Роман в стихах"),
-            Arrays.asList(new Comment(null,"fffff")));
+            new Genre(1L, "Роман в стихах"));
+
     @DisplayName("should return all books")
     @Test
     void getAllShouldReturnExpectedNumberOfBooks() {
@@ -63,8 +60,8 @@ class BookServiceImplTest {
     @DisplayName("should update book with expected id")
     @Test
     void updateBook_ShouldBeEqualToExpected() {
-        long insert = bookRepository.save(INSERT_BOOK).getId();
-        System.out.println("Incerted -----> " + bookRepository.getById(insert));
-        assertEquals(EXPECTED_BOOK_ID, insert);
+        long update = bookRepository.save(UPDATE_BOOK).getId();
+        System.out.println("Update -----> " + bookRepository.getById(update));
+        assertEquals(EXPECTED_UPDATED_BOOK_ID, update);
     }
 }

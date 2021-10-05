@@ -2,10 +2,9 @@ package ru.otus.ageev.hw06jpa.repositories;
 
 import ru.otus.ageev.hw06jpa.domain.Genre;
 
-import java.util.List;
+import java.util.Optional;
 
-public interface GenreRepository {
-    Genre getById(long id);
-    Genre getByName(String genreName);
-    List<Genre> getAll();
+public interface GenreRepository extends CrudRepository<Genre> {
+
+    Optional<Genre> getByName(String genreName);
 }

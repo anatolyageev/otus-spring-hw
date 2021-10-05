@@ -24,6 +24,17 @@ values ('Война и Мир', '1251', 3);
 insert into books(title, page_count, genre_id)
 values ('Идиот', '451', 3);
 
+insert into comments(comment, book_id )
+values ('bla-bla1',1);
+insert into comments(comment, book_id )
+values ('bla-bla1',2);
+insert into comments(comment, book_id )
+values ('bla-bla1',3);
+insert into comments(comment, book_id )
+values ('bla-bla1',4);
+insert into comments(comment, book_id )
+values ('bla-bla1',5);
+
 insert into authors_books(author_id, book_id)
 values (1, 3);
 insert into authors_books(author_id, book_id)

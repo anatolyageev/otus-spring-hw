@@ -9,7 +9,6 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Repository
@@ -23,7 +22,7 @@ public class BookRepositoryJpa implements BookRepository {
 
     @Override
     public List<Book> getAll() {
-        TypedQuery<Book> query = em.createQuery("select b from Book b join fetch b.genre join fetch b.comments", Book.class);
+        TypedQuery<Book> query = em.createQuery("select b from Book b join fetch b.genre ", Book.class);
         return query.getResultList();
     }
 

@@ -1,51 +1,67 @@
 package ru.otus.ageev.hw06jpa.repositories.impl;
 
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import ru.otus.ageev.hw06jpa.repositories.GenreRepository;
 import ru.otus.ageev.hw06jpa.domain.Genre;
+import ru.otus.ageev.hw06jpa.repositories.GenreRepository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Collections;
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
 @Repository
+@RequiredArgsConstructor
 public class GenreRepositoryJpa implements GenreRepository {
-    private final NamedParameterJdbcOperations jdbcOperations;
+    @PersistenceContext
+    private final EntityManager em;
 
-    public GenreRepositoryJpa(NamedParameterJdbcOperations jdbcOperations) {
-        this.jdbcOperations = jdbcOperations;
+    @Override
+    public Optional<Genre> getById(long id) {
+        TypedQuery<Genre> query = em.createQuery(
+                "select g from Genre g where g.id = :id"
+                , Genre.class);
+        query.setParameter("id", id);
+        try {
+            return Optional.of(query.getSingleResult());
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
     }
 
     @Override
-    public Genre getById(long id) {
-        Map<String, Object> params = Collections.singletonMap("id", id);
-        return jdbcOperations.queryForObject(
-                "select id, genre_name from genres where id = :id", params, new GenreMapper());
+    public Genre save(Genre genre) {
+        if (genre.getId() == null) {
+            em.persist(genre);
+        } else {
+            return em.merge(genre);
+        }
+        return genre;
     }
 
     @Override
-    public Genre getByName(String genreName) {
-        Map<String, Object> params = Collections.singletonMap("genre_name", genreName);
-        return jdbcOperations.queryForObject(
-                "select id, genre_name from genres where genre_name = :genre_name", params, new GenreMapper());
+    public void delete(Genre genre) {
+        em.remove(genre);
+    }
+
+    @Override
+    public Optional<Genre> getByName(String genreName) {
+        TypedQuery<Genre> query = em.createQuery(
+                "select g from Genre g where g.genreName = :genreName"
+                , Genre.class);
+        query.setParameter("genreName", genreName);
+        try {
+            return Optional.of(query.getSingleResult());
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
     }
 
     @Override
     public List<Genre> getAll() {
-        return jdbcOperations.query("select id, genre_name from genres", new GenreMapper());
-    }
-
-    private static class GenreMapper implements RowMapper<Genre> {
-
-        @Override
-        public Genre mapRow(ResultSet resultSet, int i) throws SQLException {
-            long id = resultSet.getLong("id");
-            String genreName = resultSet.getString("genre_name");
-            return new Genre(id, genreName);
-        }
+        TypedQuery<Genre> query = em.createQuery("select g from Genre g", Genre.class);
+        return query.getResultList();
     }
 }
