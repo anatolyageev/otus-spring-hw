@@ -9,6 +9,8 @@ import ru.otus.ageev.hw07springdatajpa.exeptions.ResourceNotFoundException;
 import ru.otus.ageev.hw07springdatajpa.repositories.AuthorRepository;
 import ru.otus.ageev.hw07springdatajpa.service.AuthorService;
 
+import java.util.List;
+
 @Service
 public class AuthorServiceImpl implements AuthorService {
     private final AuthorRepository authorRepository;
@@ -28,5 +30,10 @@ public class AuthorServiceImpl implements AuthorService {
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public Author save(Author author) {
         return authorRepository.save(author);
+    }
+
+    @Override
+    public void saveAll(List<Author> authorList) {
+        authorList.forEach(this::save);
     }
 }

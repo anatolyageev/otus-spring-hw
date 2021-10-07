@@ -1,5 +1,6 @@
 package ru.otus.ageev.hw07springdatajpa.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -7,20 +8,17 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.otus.ageev.hw07springdatajpa.domain.Book;
 import ru.otus.ageev.hw07springdatajpa.exeptions.ResourceNotFoundException;
 import ru.otus.ageev.hw07springdatajpa.repositories.BookRepository;
+import ru.otus.ageev.hw07springdatajpa.service.AuthorService;
 import ru.otus.ageev.hw07springdatajpa.service.BookService;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-
+@RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
-
-    @Autowired
-    public BookServiceImpl(BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
-    }
+    private final AuthorService authorService;
 
     @Override
     @Transactional(readOnly = true)
@@ -37,6 +35,7 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public void save(Book book) {
+        authorService.saveAll(book.getAuthors());
         bookRepository.save(book);
     }
 
