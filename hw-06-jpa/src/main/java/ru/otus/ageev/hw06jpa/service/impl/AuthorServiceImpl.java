@@ -9,6 +9,8 @@ import ru.otus.ageev.hw06jpa.exeptions.ResourceNotFoundException;
 import ru.otus.ageev.hw06jpa.repositories.AuthorRepository;
 import ru.otus.ageev.hw06jpa.service.AuthorService;
 
+import java.util.List;
+
 @Service
 public class AuthorServiceImpl implements AuthorService {
     private final AuthorRepository authorRepository;
@@ -25,8 +27,12 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    @Transactional(isolation = Isolation.SERIALIZABLE)
     public Author save(Author author) {
         return authorRepository.save(author);
+    }
+
+    @Override
+    public void saveAll(List<Author> authorList) {
+        authorList.forEach(this::save);
     }
 }
