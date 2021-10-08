@@ -5,10 +5,10 @@ import ru.otus.ageev.hw06jpa.domain.Author;
 import ru.otus.ageev.hw06jpa.repositories.AuthorRepository;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Repository
@@ -28,13 +28,10 @@ public class AuthorRepositoryJpa implements AuthorRepository {
 
     @Override
     public Optional<Author> getById(long id) {
-        TypedQuery<Author> query = em.createQuery(
-                "select a from Author a where a.id = :id"
-                , Author.class);
-        query.setParameter("id", id);
-        try {
-            return Optional.of(query.getSingleResult());
-        } catch (NoResultException e) {
+        Author author = em.find(Author.class, id);
+        if (Objects.nonNull(author)) {
+            return Optional.of(author);
+        } else {
             return Optional.empty();
         }
     }

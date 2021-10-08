@@ -22,14 +22,14 @@ public class BookRepositoryJpa implements BookRepository {
 
     @Override
     public List<Book> getAll() {
-        TypedQuery<Book> query = em.createQuery("select b from Book b join fetch b.genre ", Book.class);
+        TypedQuery<Book> query = em.createQuery("select b from Book b ", Book.class);
         return query.getResultList();
     }
 
     @Override
     public Optional<Book> getById(long id) {
         TypedQuery<Book> query = em.createQuery(
-                "select b from Book b join fetch b.genre where b.id = :id"
+                "select b from Book b where b.id = :id"
                 , Book.class);
         query.setParameter("id", id);
         try {
@@ -48,7 +48,6 @@ public class BookRepositoryJpa implements BookRepository {
         }
         return book;
     }
-
 
     @Override
     public void delete(Book book) {

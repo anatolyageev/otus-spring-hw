@@ -1,10 +1,8 @@
 package ru.otus.ageev.hw06jpa.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.ageev.hw06jpa.domain.Book;
 import ru.otus.ageev.hw06jpa.exeptions.ResourceNotFoundException;
@@ -34,7 +32,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    @Transactional(isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRED)
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public void save(Book book) {
         authorService.saveAll(book.getAuthors());
         bookRepository.save(book);

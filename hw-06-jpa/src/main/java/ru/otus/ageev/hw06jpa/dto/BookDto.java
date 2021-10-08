@@ -21,14 +21,18 @@ public class BookDto {
     private List<Author> authorList;
     private Genre genre;
 
+    private BookDto(Long id, String title, Integer pageCount, List<Author> authorList, Genre genre) {
+
+    }
+
     public BookDto(Book book) {
         this.id = book.getId();
         this.title = book.getTitle();
-        this.pageCount= book.getPageCount();
-        this.genre= book.getGenre();
+        this.pageCount = book.getPageCount();
+        this.genre = book.getGenre();
     }
 
-    public Book getItem(){
-        return new Book(id, title, pageCount, authorList, genre);
+    public Book getItem() {
+        return new Book(id, title, pageCount, authorList, genre,null);
     }
 }

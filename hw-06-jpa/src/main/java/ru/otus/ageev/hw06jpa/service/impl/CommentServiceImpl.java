@@ -13,8 +13,4 @@ import java.util.List;
 public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
 
-    @Override
-    public List<Comment> getAllByBook(long bookId) {
-        return commentRepository.getAllByBook(bookId);
-    }
 }

@@ -27,6 +27,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public Author save(Author author) {
         return authorRepository.save(author);
     }

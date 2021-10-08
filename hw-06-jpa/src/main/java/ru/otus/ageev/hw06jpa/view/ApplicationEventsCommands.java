@@ -85,6 +85,6 @@ public class ApplicationEventsCommands {
 
     @ShellMethod(value = "All comments for book", key = {"gcb", "getCommetsBook"})
     public void getAllCommentsForBook(@ShellOption Long id) {
-        commentService.getAllByBook(id).forEach(System.out::println);
+        bookService.getById(id).get().getComments().forEach(System.out::println);
     }
 }

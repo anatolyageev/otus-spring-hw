@@ -31,10 +31,10 @@ class BookServiceImplTest {
     private final long EXPECTED_UPDATED_BOOK_ID = 1;
     private final int EXPECTED_NUMBER_OF_BOOKS = 5;
     private final Book INSERT_BOOK = new Book(null, "Дубровский", 351, Arrays.asList(new Author(1L, "Александр", "Пушкин")),
-            new Genre(1L, "Роман"));
+            new Genre(1L, "Роман"),null);
     private final Book UPDATE_BOOK = new Book(1L, "Евгений Онегин Updated", 251,
             Arrays.asList(new Author(1L, "Александр", "Пушкин")),
-            new Genre(1L, "Роман в стихах"));
+            new Genre(1L, "Роман в стихах"),null);
 
     @DisplayName("should return all books")
     @Test
@@ -61,7 +61,7 @@ class BookServiceImplTest {
     @Test
     void updateBook_ShouldBeEqualToExpected() {
         long update = bookRepository.save(UPDATE_BOOK).getId();
-        System.out.println("Update -----> " + bookRepository.getById(update));
+
         assertEquals(EXPECTED_UPDATED_BOOK_ID, update);
     }
 }

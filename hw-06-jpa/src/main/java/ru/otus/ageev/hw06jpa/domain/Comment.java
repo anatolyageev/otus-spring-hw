@@ -22,8 +22,8 @@ public class Comment {
     @Column(name = "comment")
     private String comment;
 
-    @ManyToOne(targetEntity = Book.class,fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "book_id")
+    @ManyToOne(targetEntity = Book.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "book_id",referencedColumnName = "id")
     @ToString.Exclude
     private Book book;
 }
