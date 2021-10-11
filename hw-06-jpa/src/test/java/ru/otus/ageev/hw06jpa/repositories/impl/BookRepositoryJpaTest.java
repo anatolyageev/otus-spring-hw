@@ -9,14 +9,12 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 import ru.otus.ageev.hw06jpa.domain.Author;
 import ru.otus.ageev.hw06jpa.domain.Book;
-import ru.otus.ageev.hw06jpa.domain.Comment;
 import ru.otus.ageev.hw06jpa.domain.Genre;
-import ru.otus.ageev.hw06jpa.dto.BookDto;
 
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("Jpa repo for Book ")
 @DataJpaTest
@@ -49,7 +47,6 @@ class BookRepositoryJpaTest {
 
         assertThat(books).isNotNull().hasSize(EXPECTED_NUMBER_OF_BOOKS);
     }
-
 
     @DisplayName("should save book with expected id")
     @Test

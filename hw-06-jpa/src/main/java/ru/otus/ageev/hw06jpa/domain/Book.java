@@ -32,7 +32,8 @@ public class Book {
     @JoinColumn(name = "genre_id", referencedColumnName = "id")
     private Genre genre;
 
-    @OneToMany(targetEntity = Comment.class, orphanRemoval = true,fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SUBSELECT)
+    @OneToMany(targetEntity = Comment.class, orphanRemoval = true,fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE, CascadeType.REFRESH})
     @JoinColumn(name = "book_id")
     private List<Comment> comments;
 }

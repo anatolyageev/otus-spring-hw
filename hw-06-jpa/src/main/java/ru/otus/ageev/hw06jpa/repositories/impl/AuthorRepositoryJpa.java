@@ -1,6 +1,6 @@
 package ru.otus.ageev.hw06jpa.repositories.impl;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 import ru.otus.ageev.hw06jpa.domain.Author;
 import ru.otus.ageev.hw06jpa.repositories.AuthorRepository;
 
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-@Repository
+@Component
 public class AuthorRepositoryJpa implements AuthorRepository {
     @PersistenceContext
     private final EntityManager em;
