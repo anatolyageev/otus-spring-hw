@@ -6,23 +6,21 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.context.annotation.Import;
 import ru.otus.ageev.hw07springdatajpa.domain.Author;
 import ru.otus.ageev.hw07springdatajpa.domain.Book;
 import ru.otus.ageev.hw07springdatajpa.domain.Genre;
-import ru.otus.ageev.hw07springdatajpa.repositories.impl.BookRepositoryJpa;
+import ru.otus.ageev.hw07springdatajpa.repositories.BookRepository;
 
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("Jpa repo for Book ")
 @DataJpaTest
-@Import(BookRepositoryJpa.class)
 class BookServiceImplTest {
     @Autowired
-    private BookRepositoryJpa bookRepository;
+    private BookRepository bookRepository;
 
     @Autowired
     private TestEntityManager em;
@@ -43,7 +41,7 @@ class BookServiceImplTest {
                 .unwrap(SessionFactory.class);
         sessionFactory.getStatistics().setStatisticsEnabled(true);
 
-        var books = bookRepository.getAll();
+        var books = bookRepository.findAll();
 
         assertThat(books).isNotNull().hasSize(EXPECTED_NUMBER_OF_BOOKS);
     }

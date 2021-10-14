@@ -3,7 +3,7 @@ package ru.otus.ageev.hw07springdatajpa.repositories;
 import java.util.List;
 import java.util.Optional;
 
-public interface CrudRepository <T>{
+public interface MyCrudRepository<T>{
     List<T> getAll();
 
     Optional<T> getById(long id);

@@ -21,15 +21,15 @@ public class BookServiceImpl implements BookService {
     private final AuthorService authorService;
 
     @Override
-    @Transactional(readOnly = true)
+//    @Transactional(readOnly = true)
     public List<Book> getAll() {
-        return bookRepository.getAll();
+        return bookRepository.findAll();
     }
 
     @Override
-    @Transactional(readOnly = true, isolation = Isolation.REPEATABLE_READ)
+//    @Transactional(readOnly = true, isolation = Isolation.REPEATABLE_READ)
     public Optional<Book> getById(long id) {
-        return bookRepository.getById(id);
+        return bookRepository.findById(id);
     }
 
     @Override
@@ -42,7 +42,7 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public void update(Book book) {
-        bookRepository.getById(book.getId()).ifPresentOrElse((b) -> bookRepository.save(book), () -> {
+        bookRepository.findById(book.getId()).ifPresentOrElse((b) -> bookRepository.save(book), () -> {
             throw new ResourceNotFoundException("Book with id " + book.getId() + " is not found!");
         });
     }
@@ -50,7 +50,7 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public void deleteById(long id) {
-        bookRepository.getById(id).ifPresentOrElse(bookRepository::delete, () -> {
+        bookRepository.findById(id).ifPresentOrElse(bookRepository::delete, () -> {
             throw new ResourceNotFoundException("Book with id " + id + " is not found!");
         });
     }
