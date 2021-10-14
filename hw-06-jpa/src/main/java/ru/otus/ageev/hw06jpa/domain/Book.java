@@ -10,7 +10,6 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Entity
 @Getter
 @Table(name = "books")
@@ -33,7 +32,8 @@ public class Book {
     private Genre genre;
 
     @Fetch(FetchMode.SUBSELECT)
-    @OneToMany(targetEntity = Comment.class, orphanRemoval = true,fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE, CascadeType.REFRESH})
+    @OneToMany(targetEntity = Comment.class, orphanRemoval = true, fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE, CascadeType.REFRESH})
     @JoinColumn(name = "book_id")
+    @ToString.Exclude
     private List<Comment> comments;
 }

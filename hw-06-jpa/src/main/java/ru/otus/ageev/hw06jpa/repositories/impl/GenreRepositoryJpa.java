@@ -6,7 +6,6 @@ import ru.otus.ageev.hw06jpa.domain.Genre;
 import ru.otus.ageev.hw06jpa.repositories.GenreRepository;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
@@ -20,15 +19,7 @@ public class GenreRepositoryJpa implements GenreRepository {
 
     @Override
     public Optional<Genre> getById(long id) {
-        TypedQuery<Genre> query = em.createQuery(
-                "select g from Genre g where g.id = :id"
-                , Genre.class);
-        query.setParameter("id", id);
-        try {
-            return Optional.of(query.getSingleResult());
-        } catch (NoResultException e) {
-            return Optional.empty();
-        }
+        return Optional.ofNullable(em.find(Genre.class, id));
     }
 
     @Override
@@ -52,11 +43,7 @@ public class GenreRepositoryJpa implements GenreRepository {
                 "select g from Genre g where g.genreName = :genreName"
                 , Genre.class);
         query.setParameter("genreName", genreName);
-        try {
-            return Optional.of(query.getSingleResult());
-        } catch (NoResultException e) {
-            return Optional.empty();
-        }
+        return Optional.ofNullable(query.getSingleResult());
     }
 
     @Override
