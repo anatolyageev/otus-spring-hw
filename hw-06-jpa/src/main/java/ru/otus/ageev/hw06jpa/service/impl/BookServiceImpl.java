@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.ageev.hw06jpa.domain.Book;
+import ru.otus.ageev.hw06jpa.domain.Comment;
 import ru.otus.ageev.hw06jpa.exeptions.ResourceNotFoundException;
 import ru.otus.ageev.hw06jpa.repositories.BookRepository;
 import ru.otus.ageev.hw06jpa.service.AuthorService;
@@ -53,5 +54,13 @@ public class BookServiceImpl implements BookService {
         bookRepository.getById(id).ifPresentOrElse(bookRepository::delete, () -> {
             throw new ResourceNotFoundException("Book with id " + id + " is not found!");
         });
+    }
+
+    @Override
+    @Transactional(isolation = Isolation.SERIALIZABLE, propagation= Propagation.REQUIRES_NEW)
+    public List<Comment> getCommentsByBookId(Long bookId) {
+        List<Comment> result = bookRepository.getById(bookId).get().getComments();
+        result.forEach(System.out::println);
+        return result;
     }
 }

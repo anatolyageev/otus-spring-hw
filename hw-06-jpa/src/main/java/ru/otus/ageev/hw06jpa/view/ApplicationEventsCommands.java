@@ -108,13 +108,13 @@ public class ApplicationEventsCommands {
         return "Book successfully deleted";
     }
 
-    @Transactional
     @ShellMethod(value = "All comments for book", key = {"gcb", "getCommetsBook"})
     public void getAllCommentsForBook(@ShellOption Long id) {
-        var comments = bookService.getById(id).get().getComments();
+        var comments = bookService.getCommentsByBookId(id);
         if (comments.size() != 0) {
             comments.forEach(System.out::println);
+        }else {
+            System.out.println("There are no comments for this book. You will be first one");
         }
-        System.out.println("There are no comments for this book. You will be first one");
     }
 }
