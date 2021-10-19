@@ -16,18 +16,18 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public Genre getById(long id) {
-        return genreRepository.getById(id)
+        return genreRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Genre with such id doesn't exist"));
     }
 
     @Override
     public Genre getByName(String genreName) {
-        return genreRepository.getByName(genreName)
+        return genreRepository.getByGenreName(genreName)
                 .orElseThrow(() -> new ResourceNotFoundException("Genre with such name doesn't exist"));
     }
 
     @Override
     public List<Genre> getAll() {
-        return genreRepository.getAll();
+        return genreRepository.findAll();
     }
 }

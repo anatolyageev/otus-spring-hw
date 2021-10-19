@@ -6,16 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
+import ru.otus.ageev.hw07springdatajpa.repositories.CommentRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Jpa repo for Comment ")
 @DataJpaTest
-@Import(CommentRepositoryJpa.class)
 class CommentRepositoryJpaTest {
     @Autowired
-    private CommentRepositoryJpa repository;
+    private CommentRepository repository;
 
     @Autowired
     private TestEntityManager em;
@@ -23,7 +23,7 @@ class CommentRepositoryJpaTest {
     @DisplayName("should return all comments")
     @Test
     void getAllShouldReturnExpectedNumberOfComments() {
-        var comments = repository.getAll();
+        var comments = repository.findAll();
 
         comments.forEach(System.out::println);
 
@@ -33,7 +33,7 @@ class CommentRepositoryJpaTest {
     @DisplayName("should return all comments for book")
     @Test
     void getAllShouldReturnExpectedNumberOfCommentsForBook() {
-        var comments = repository.getAllByBook(2L);
+        var comments = repository.getAllByBookId(2L);
 
         assertThat(comments).isNotNull().hasSize(1);
     }
@@ -41,9 +41,9 @@ class CommentRepositoryJpaTest {
     @DisplayName("should delete comment")
     @Test
     void deleteCommentShouldRemainEmptyAfterDelete() {
-        var comments = repository.getAllByBook(2L);
+        var comments = repository.getAllByBookId(2L);
         repository.delete(comments.get(0));
-        comments = repository.getAllByBook(2L);
+        comments = repository.getAllByBookId(2L);
         assertThat(comments).isNotNull().hasSize(0);
     }
 }
