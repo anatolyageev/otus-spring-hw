@@ -1,11 +1,11 @@
 package ru.otus.ageev.hw07springdatajpa.service.impl;
 
-import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.context.annotation.Import;
 import ru.otus.ageev.hw07springdatajpa.domain.Author;
 import ru.otus.ageev.hw07springdatajpa.domain.Book;
 import ru.otus.ageev.hw07springdatajpa.domain.Genre;
@@ -18,9 +18,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("Jpa repo for Book ")
 @DataJpaTest
+@Import({BookServiceImpl.class, AuthorServiceImpl.class})
 class BookServiceImplTest {
     @Autowired
     private BookRepository bookRepository;
+    @Autowired
+    private BookServiceImpl bookService;
+    @Autowired
+    AuthorServiceImpl authorService;
 
     @Autowired
     private TestEntityManager em;
@@ -37,11 +42,7 @@ class BookServiceImplTest {
     @DisplayName("should return all books")
     @Test
     void getAllShouldReturnExpectedNumberOfBooks() {
-        SessionFactory sessionFactory = em.getEntityManager().getEntityManagerFactory()
-                .unwrap(SessionFactory.class);
-        sessionFactory.getStatistics().setStatisticsEnabled(true);
-
-        var books = bookRepository.findAll();
+        var books = bookService.getAll();
 
         assertThat(books).isNotNull().hasSize(EXPECTED_NUMBER_OF_BOOKS);
     }
@@ -50,7 +51,7 @@ class BookServiceImplTest {
     @DisplayName("should save book with expected id")
     @Test
     void insertBook_ShouldReturnExpectedBookId() {
-        long insert = bookRepository.save(INSERT_BOOK).getId();
+        long insert = bookService.save(INSERT_BOOK).getId();
         System.out.println("Incerted -----> " + bookRepository.getById(insert));
         assertEquals(EXPECTED_BOOK_ID, insert);
     }

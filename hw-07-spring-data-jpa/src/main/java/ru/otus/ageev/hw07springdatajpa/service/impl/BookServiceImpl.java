@@ -1,7 +1,6 @@
 package ru.otus.ageev.hw07springdatajpa.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,22 +20,22 @@ public class BookServiceImpl implements BookService {
     private final AuthorService authorService;
 
     @Override
-//    @Transactional(readOnly = true)
+    @Transactional(readOnly = true)
     public List<Book> getAll() {
         return bookRepository.findAll();
     }
 
     @Override
-//    @Transactional(readOnly = true, isolation = Isolation.REPEATABLE_READ)
+    @Transactional(readOnly = true, isolation = Isolation.REPEATABLE_READ)
     public Optional<Book> getById(long id) {
         return bookRepository.findById(id);
     }
 
     @Override
     @Transactional(isolation = Isolation.SERIALIZABLE)
-    public void save(Book book) {
+    public Book save(Book book) {
         authorService.saveAll(book.getAuthors());
-        bookRepository.save(book);
+        return bookRepository.save(book);
     }
 
     @Override
