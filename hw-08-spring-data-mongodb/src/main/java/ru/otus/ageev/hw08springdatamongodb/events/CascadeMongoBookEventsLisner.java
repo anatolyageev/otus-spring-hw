@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.mapping.event.AfterDeleteEvent;
 import org.springframework.data.mongodb.core.mapping.event.BeforeConvertEvent;
 import org.springframework.stereotype.Component;
 import ru.otus.ageev.hw08springdatamongodb.domain.Author;
+import ru.otus.ageev.hw08springdatamongodb.domain.Genre;
 import ru.otus.ageev.hw08springdatamongodb.repositories.BookRepository;
 
 @Component
@@ -32,6 +33,9 @@ public class CascadeMongoBookEventsLisner extends AbstractMongoEventListener<Obj
         if (("authors".equalsIgnoreCase(event.getCollectionName()))) {
             Author source = (Author) event.getSource();
             repository.setAuthorElementsById(source);
+        } else if (("genres".equalsIgnoreCase(event.getCollectionName()))){
+            Genre source = (Genre) event.getSource();
+            repository.setGenreElementsById(source);
         }
     }
 }

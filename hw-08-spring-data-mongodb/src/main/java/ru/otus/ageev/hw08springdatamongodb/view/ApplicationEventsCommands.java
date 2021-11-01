@@ -9,10 +9,7 @@ import ru.otus.ageev.hw08springdatamongodb.domain.Author;
 import ru.otus.ageev.hw08springdatamongodb.domain.Book;
 import ru.otus.ageev.hw08springdatamongodb.domain.Genre;
 import ru.otus.ageev.hw08springdatamongodb.dto.BookDto;
-import ru.otus.ageev.hw08springdatamongodb.service.BookService;
-import ru.otus.ageev.hw08springdatamongodb.service.CommentService;
-import ru.otus.ageev.hw08springdatamongodb.service.GenreService;
-import ru.otus.ageev.hw08springdatamongodb.service.InterfaceHelperService;
+import ru.otus.ageev.hw08springdatamongodb.service.*;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -24,6 +21,7 @@ public class ApplicationEventsCommands {
     private final BookService bookService;
     private final GenreService genreService;
     private final CommentService commentService;
+    private final AuthorService authorService;
     private final InterfaceHelperService interfaceHelperService;
 
     @ShellMethod(value = "Run H2 Console", key = {"h2", "runH2Console"})
@@ -75,6 +73,14 @@ public class ApplicationEventsCommands {
         Book book = bookDto.getItem();
         bookService.update(book);
         return "Book saved";
+    }
+
+    @ShellMethod(value = "Update Author", key = {"ua", "updateAuthor"})
+    public String updateAuthor(@ShellOption String id,
+                             @ShellOption String name,
+                             @ShellOption String surname) {
+
+    return "Author saved: " + authorService.save(new Author(id, name, surname)) ;
     }
 
     @ShellMethod(value = "Delete book", key = {"db", "deleteBook"})
