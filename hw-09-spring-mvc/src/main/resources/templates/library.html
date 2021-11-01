@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<table border="1">
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+    </tr>
+    <tr th:each ="book : ${books}">
+        <td th:utext="${book.title}">...</td>
+        <td th:utext="${book.pageCount}">...</td>
+    </tr>
+</table>
+
+</body>
+</html>
