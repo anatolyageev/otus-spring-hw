@@ -14,9 +14,10 @@ import java.util.List;
 public class LibraryController {
     private final BookService bookService;
 
-    @GetMapping("/library")
+    @GetMapping("/libraryaaa")
     public String getBooks(Model model) {
         model.addAttribute("books", bookService.getAll());
         return "library";
     }
+
 }

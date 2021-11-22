@@ -1,9 +1,6 @@
 package ru.otus.ageev.hw09springmvc.dto;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import ru.otus.ageev.hw09springmvc.domain.Author;
 import ru.otus.ageev.hw09springmvc.domain.Book;
 import ru.otus.ageev.hw09springmvc.domain.Genre;
@@ -14,6 +11,7 @@ import java.util.List;
 @Setter
 @ToString
 @NoArgsConstructor
+@AllArgsConstructor
 public class BookDto {
     private Long id;
     private String title;

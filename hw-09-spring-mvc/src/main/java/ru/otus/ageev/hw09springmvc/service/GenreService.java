@@ -8,4 +8,5 @@ public interface GenreService {
     Genre getById(long id);
     Genre getByName(String genreName);
     List<Genre> getAll();
+    Genre save(Genre genre);
 }
