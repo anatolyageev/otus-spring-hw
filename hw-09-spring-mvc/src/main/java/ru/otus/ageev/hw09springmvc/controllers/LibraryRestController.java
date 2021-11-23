@@ -1,6 +1,5 @@
 package ru.otus.ageev.hw09springmvc.controllers;
 
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -32,5 +31,12 @@ public class LibraryRestController {
     public Book post(@RequestBody BookDto book) {
         System.out.println(book);
         return bookService.save(book.getItem());
+    }
+
+    @PutMapping(value = "/api/library/")
+    @ResponseStatus(HttpStatus.OK)
+    public void update(@RequestBody BookDto book) {
+        System.out.println(book);
+        bookService.update(book.getItem());
     }
 }
