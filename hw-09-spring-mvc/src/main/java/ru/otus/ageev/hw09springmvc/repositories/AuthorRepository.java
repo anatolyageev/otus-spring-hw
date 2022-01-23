@@ -5,5 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 import ru.otus.ageev.hw09springmvc.domain.Author;
 
 public interface AuthorRepository extends JpaRepository<Author, Long> {
-
+    public Author  getAuthorIdAndName();
 }
