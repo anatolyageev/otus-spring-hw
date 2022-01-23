@@ -1,0 +1,15 @@
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 0
+      database: test
+  shell:
+    interactive:
+      enabled: false
+logging:
+  level:
+    root: ERROR
+
+
+
