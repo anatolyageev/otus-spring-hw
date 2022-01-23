@@ -6,6 +6,6 @@ import ru.otus.ageev.hw09springmvc.domain.Genre;
 import java.util.Optional;
 
 public interface GenreRepository extends JpaRepository <Genre, Long> {
-
+    //Some changes
     Optional<Genre> getByGenreName(String genreName);
 }
